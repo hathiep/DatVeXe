@@ -14,7 +14,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     Bill getBillByDateAndTimeAndIdClient(Date date, Time time, Integer idClient);
 
     @Query(value = "SELECT SUM(quantity) FROM bill t WHERE t.id_trip = :id_trip AND t.date = :date", nativeQuery = true)
-    int getQuantityByIdTripAndDate(@Param("id_trip") Integer id_trip, @Param("date") Date date);
+    Integer getQuantityByIdTripAndDate(@Param("id_trip") Integer id_trip, @Param("date") Date date);
 
 
 }
