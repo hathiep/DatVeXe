@@ -2,9 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Trips</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
+
+<h2>List of Trips</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Don</th>
+        <th>Tra</th>
+        <th>Direction</th>
+        <th>License Plate</th>
+        <th>Departure Time</th>
+        <th>Arrival Time</th>
+        <th>Phone</th>
+        <th>Image</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through the list of trips -->
+    <th:block th:each="trip : ${list_trip}">
+        <tr>
+            <td th:text="${trip.id}"></td>
+            <td th:text="${trip.name}"></td>
+            <td th:text="${trip.don}"></td>
+            <td th:text="${trip.tra}"></td>
+            <td th:text="${trip.direction}"></td>
+            <td th:text="${trip.bien_so}"></td>
+            <td th:text="${trip.don_time}"></td>
+            <td th:text="${trip.tra_time}"></td>
+            <td th:text="${trip.phone}"></td>
+            <td th:text="${trip.image}"></td>
+            <td th:text="${trip.quantity}"></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
 
 </body>
 </html>
