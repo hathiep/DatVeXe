@@ -20,7 +20,10 @@ public class BillService {
         return  billRepository.getBillByDateAndTimeAndIdClient(date, time, id_client);
     }
     public Integer getQuantityByIdTripAndDate(Integer id_trip, Date date){
-        return billRepository.getQuantityByIdTripAndDate(id_trip, date);
+        int quantity = 0;
+        if (billRepository.getQuantityByIdTripAndDate(id_trip, date) != null)
+            quantity = billRepository.getQuantityByIdTripAndDate(id_trip, date);
+        return quantity;
     }
 
 
