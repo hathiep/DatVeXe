@@ -4,8 +4,8 @@ import com.rs.datvexe.model.Trip;
 import com.rs.datvexe.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(path = "/")
 public class BookingController {
     @Autowired
@@ -35,6 +35,6 @@ public class BookingController {
         }
         List<Trip> list_trip = bookingService.getTripByDateAndDonAndTra(sqlDate, don, tra);
         model.addAttribute("list_trip", list_trip);
-        return "templates/Booking.html";
+        return "Booking";
     }
 }
