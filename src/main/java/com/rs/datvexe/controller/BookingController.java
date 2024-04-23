@@ -1,6 +1,5 @@
 package com.rs.datvexe.controller;
 
-import com.rs.datvexe.model.Route;
 import com.rs.datvexe.model.Trip;
 import com.rs.datvexe.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -35,16 +33,8 @@ public class BookingController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Trip> list_trip = new ArrayList<>();
-        list_trip = bookingService.getTripByDateAndDonAndTra(sqlDate, don, tra);
+        List<Trip> list_trip = bookingService.getTripByDateAndDonAndTra(sqlDate, don, tra);
         model.addAttribute("list_trip", list_trip);
         return "Booking";
-    }
-    @GetMapping("/search/location")
-    public String getRouteByIdTripAndType(Model model, @Param("id_trip") Integer id_trip, @Param("type") String type){
-        List<Route> list_route = new ArrayList<>();
-        list_route = bookingService.getRouteByIdTripAndType(id_trip, type);
-        model.addAttribute("list_route", list_route);
-        return "Trip";
     }
 }
