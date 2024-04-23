@@ -42,10 +42,13 @@ public class Trip {
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "id_route")
+    private int idRoute;
+
     public Trip() {
     }
 
-    public Trip(int id, String name, String don, String tra, String direction, String bienSo, Time donTime, Time traTime, String phone, String image, int quantity) {
+    public Trip(int id, String name, String don, String tra, String direction, String bienSo, Time donTime, Time traTime, String phone, String image, int quantity, int idRoute) {
         this.id = id;
         this.name = name;
         this.don = don;
@@ -57,6 +60,7 @@ public class Trip {
         this.phone = phone;
         this.image = image;
         this.quantity = quantity;
+        this.idRoute = idRoute;
     }
 
     public int getId() {
@@ -147,5 +151,12 @@ public class Trip {
         this.quantity = quantity;
     }
 
+    public int getIdRoute() {
+        return idRoute;
+    }
+
+    public void setIdRoute(int idRoute) {
+        this.idRoute = idRoute;
+    }
 }
 

@@ -1,6 +1,5 @@
 package com.rs.datvexe.service;
 
-import com.rs.datvexe.model.Route;
 import com.rs.datvexe.model.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class BookingService {
     @Autowired
     ClientService clientService;
     @Autowired
-    RouteService routeService;
+    LocationService routeService;
     @Autowired
     TripService tripService;
 
@@ -28,8 +27,8 @@ public class BookingService {
         return list_trip;
     }
 
-    public List<Route> getRouteByIdTripAndType(Integer id_trip, String type){
-        List<Route> list_route = routeService.getByIdTripAndType(id_trip, type);
-        return list_route;
+    public List<com.rs.datvexe.model.Location> getRouteByIdRouteAndType(Integer id_route, String type){
+        List<com.rs.datvexe.model.Location> list_location = routeService.getByIdRouteAndType(id_route, type);
+        return list_location;
     }
 }

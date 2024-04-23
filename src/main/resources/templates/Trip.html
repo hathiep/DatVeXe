@@ -2,9 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Locations</title>
 </head>
 <body>
-
+<h2>Select Locations</h2>
+<form action="/search/location" method="get">
+    <label for="di">Locations for Outbound Trip:</label>
+    <select name="location_di" id="di">
+        <option value="">Select a location</option>
+        <!-- Populate options for locations for outbound trip -->
+        <th:block th:each="location : ${list_route_di}">
+            <option th:value="${location.id}" th:text="${location.name}"></option>
+        </th:block>
+    </select>
+    <br><br>
+    <label for="ve">Locations for Return Trip:</label>
+    <select name="location_ve" id="ve">
+        <option value="">Select a location</option>
+        <!-- Populate options for locations for return trip -->
+        <th:block th:each="location : ${list_route_ve}">
+            <option th:value="${location.id}" th:text="${location.name}"></option>
+        </th:block>
+    </select>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>
