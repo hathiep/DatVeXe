@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Integer> {

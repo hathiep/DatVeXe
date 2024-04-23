@@ -19,11 +19,42 @@
         th {
             background-color: #f2f2f2;
         }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 5px;
+            width: 150px;
+        }
+
+        .search-form input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <h2>List of Trips</h2>
+
+<!-- Search Form -->
+<form class="search-form" action="/search" method="get">
+    <label for="date" style="flex: 0 0 100%; margin-bottom: 10px;">Select Date:</label>
+    <input type="date" id="date" name="date" min="yyyy-mm-dd" required style="flex: 0 0 calc(50% - 10px); margin-right: 20px; margin-bottom: 10px;">
+
+    <label for="don">Departure Point:</label>
+    <input type="text" id="don" name="don" placeholder="Departure Point">
+
+    <label for="tra">Destination:</label>
+    <input type="text" id="tra" name="tra" placeholder="Destination">
+
+    <input type="submit" value="Search">
+</form>
 
 <table>
     <thead>
@@ -62,4 +93,23 @@
 </table>
 
 </body>
+<script>
+    // Lấy ngày hiện tại
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; // Tháng bắt đầu từ 0
+    var yyyy = today.getFullYear();
+
+    // Định dạng lại ngày hiện tại thành yyyy-mm-dd
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // Đặt thuộc tính min của trường bookingDate
+    document.getElementById('date').setAttribute('min', today);
+</script>
 </html>
