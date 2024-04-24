@@ -1,12 +1,10 @@
 package com.rs.datvexe.controller;
 
-import com.rs.datvexe.model.Bill;
-import com.rs.datvexe.model.Client;
-import com.rs.datvexe.model.Location;
-import com.rs.datvexe.model.Trip;
+import com.rs.datvexe.model.*;
 import com.rs.datvexe.service.BillService;
 import com.rs.datvexe.service.BookingService;
 import com.rs.datvexe.service.ClientService;
+import com.rs.datvexe.service.MailSenderService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -26,6 +24,8 @@ import java.util.List;
 @RequestMapping(path = "/")
 public class BookingController {
     @Autowired
+    MailSenderService mailSenderService;
+    @Autowired
     private BookingService bookingService;
     @Autowired
     private ClientService clientService;
@@ -36,7 +36,7 @@ public class BookingController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date sqlDate = null;
         try {
-            // Chuyển đổi chuỗi thành kiểu dữ liệu SQL Date
+
             sqlDate = new Date(dateFormat.parse(date).getTime());
             session.setAttribute("date", sqlDate);
             // In ra kiểu dữ liệu SQL Date đã chuyển đổi
@@ -123,6 +123,21 @@ public class BookingController {
         bill.setTime(Time.valueOf(LocalTime.now()));
         billService.save(bill);
         System.out.println("Them thanh cong");
+        MailStructure mailStructure = new MailStructure();
+        mailStructure.setSubject("THÔNG BÁO BILL ĐẶT VÉ XE");
+        String message = "DEAR " + client.getName() +"\n"+
+                "Chúng tôi xác nhận bạn đã đặt vé xe của nhà xe " + trip.getName() + " gồm các thông tin sau :\n"+
+                "   - Biển số xe: " + trip.getBienSo()+ "\n" +
+                "   - Khởi hành: "+ trip.getDon() + " tại " + session.getAttribute("location_di") + " vào lúc: " + trip.getDonTime() +"\n"+
+                "   - Điểm đến: "+ trip.getTra() + " tại " + session.getAttribute("location_ve") + " vào lúc: " + trip.getTraTime() +"\n"+
+                "   - Giá vé: " + trip.getPrice() +"đ/vé \n" +
+                "   - Số lượng vé: " + bill.getQuantity() +"\n"+
+                "   - Tổng tiền đã thanh toán: "+ trip.getPrice() * bill.getQuantity() + "đ\n"+
+                "\nVui lòng liên hệ nhà xe qua số điện thoại "+ trip.getPhone() + " nếu có bất kì thắc mắc nào\n\n"+
+                "CẢM ƠN ĐÃ SỬ DỤNG DỊCH VỤ CỦA CHÚNG TÔI";
+        mailStructure.setMessage(message);
+
+        mailSenderService.sendMail(client.getEmail(),mailStructure);
         return "Success";
     }
 }
