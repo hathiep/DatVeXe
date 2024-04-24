@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Liên kết với file CSS -->
+    <style>
+        /* CSS tạm thời trong trường hợp không thể liên kết với file styles.css */
+
+    </style>
+</head>
+<body>
+<div class="centered-card">
+    <form action="/confirm-payment" method="POST" class="cart-view" th:client="${client}" th:trip="${trip}" th:location_di="${location_di}" th:location_ve="${location_ve}" th:quantity="${quantity}" th:totalPrice="${totalPrice}">
+        <h2>Thông tin khách hàng:</h2>
+        <p><strong>Tên khách hàng:</strong> <span th:text="${client.name}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${client.sdt}"></span></p>
+        <h2>Thông tin đặt vé:</h2>
+        <p><strong>Tên chuyến đi:</strong> <span th:text="${trip.name}"></span></p>
+        <p><strong>Biển số xe:</strong> <span th:text="${trip.bienSo}"></span></p>
+        <p><strong>Khởi hành:</strong> <span th:text="${trip.don}"></span> - <span th:text="${trip.donTime}"></span></p>
+        <p><strong>Kết thúc:</strong> <span th:text="${trip.tra}"></span> - <span th:text="${trip.traTime}"></span></p>
+        <p><strong>Điểm đón:</strong> <span th:text="${location_di}"></span></p>
+        <p><strong>Điểm trả:</strong> <span th:text="${location_ve}"></span></p>
+        <p><strong>Giá vé:</strong> <span th:text="${trip.price}"></span></p>
+        <p><strong>Số lượng ghế:</strong> <span th:text="${quantity}"></span></p>
+        <p><strong>Tổng tiền:</strong> <span th:text="${totalPrice}">đ</span></p>
+        <button type="submit">Xác nhận thanh toán</button>
+    </form>
+</div>
+</body>
+</html>
