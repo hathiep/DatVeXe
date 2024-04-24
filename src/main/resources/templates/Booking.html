@@ -78,7 +78,7 @@
 <h2>List of Trips</h2>
 
 <!-- Search Form -->
-<form class="search-form" action="/search" method="get">
+<form class="search-form" onsubmit="searchTrips(event)">
     <label for="date">Select Date:</label>
     <input type="date" id="date" name="date" min="yyyy-mm-dd" required>
     <label for="don">Departure Point:</label>
@@ -89,31 +89,7 @@
 </form>
 
 <!-- Card View -->
-<div class="container">
-    <!-- Loop through the list of trips -->
-    <th:block th:each="trip : ${list_trip}">
-        <div class="card">
-            <img th:src="${trip.image}" alt="Trip Image">
-            <div class="card-content">
-                <h4><b><span th:text="${trip.name}"></span></b></h4>
-                <p>Khởi hành: <span th:text="${trip.don}"></span> - <span th:text="${trip.donTime}"></span></p>
-                <p>Kết thúc: <span th:text="${trip.tra}"></span> - <span th:text="${trip.traTime}"></span></p>
-                <p>SĐT: <span th:text="${trip.phone}"></span></p>
-            </div>
-            <div class="card-content">
-                <h4><b><span> &nbsp; </span></b></h4>
-                <p>Biển số: <span th:text="${trip.bienSo}"></span></p>
-                <p>Giá vé: <span th:text="${trip.price}"></span></p>
-                <p>Số ghế còn lại: <span th:text="${trip.quantity}"></span></p>
-                <div class="button-container">
-                    <form th:action="@{'/search/location/' + ${trip.id}}" method="get">
-                        <button type="submit">Call API</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </th:block>
-</div>
+<div class="container" id="tripContainer"></div>
 
 <script>
     // Lấy ngày hiện tại
@@ -133,6 +109,52 @@
 
     // Đặt thuộc tính min của trường bookingDate
     document.getElementById('date').setAttribute('min', today);
+    function searchTrips(event) {
+        event.preventDefault();
+        const date = document.getElementById('date').value;
+        const don = document.getElementById('don').value;
+        const tra = document.getElementById('tra').value;
+
+        const apiUrl = `http://localhost:8080/api/trips?date=${date}&don=${don}&tra=${tra}`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(trips => {
+                const tripContainer = document.getElementById('tripContainer');
+                tripContainer.innerHTML = ''; // Clear previous results
+
+                trips.forEach(trip => {
+                    const card = `
+                        <div class="card">
+                            <img src="${trip.image}" alt="Trip Image">
+                            <div class="card-content">
+                                <h4><b>${trip.name}</b></h4>
+                                <p>Khởi hành: ${trip.don} - ${trip.donTime}</p>
+                                <p>Kết thúc: ${trip.tra} - ${trip.traTime}</p>
+                                <p>SĐT: ${trip.phone}</p>
+                            </div>
+                            <div class="card-content">
+                                <h4><b>&nbsp;</b></h4>
+                                <p>Biển số: ${trip.bienSo}</p>
+                                <p>Giá vé: ${trip.price}</p>
+                                <p>Số ghế còn lại: ${trip.quantity}</p>
+                                <div class="button-container">
+                                    <button type="button" onclick="navigateToTripPage(${trip.id})">Go to Trip</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    `;
+                    tripContainer.insertAdjacentHTML('beforeend', card);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+    function navigateToTripPage(tripId) {
+        window.location.href = `Trip.html?id_trip=`+tripId;
+    }
 </script>
 </body>
 </html>

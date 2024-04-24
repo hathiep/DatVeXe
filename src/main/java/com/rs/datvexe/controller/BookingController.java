@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,9 +20,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
-@Controller
-@RequestMapping(path = "/")
+@CrossOrigin("*")
+@RestController
+@RequestMapping(path = "/api")
 public class BookingController {
     @Autowired
     MailSenderService mailSenderService;
@@ -31,24 +32,23 @@ public class BookingController {
     private ClientService clientService;
     @Autowired
     private BillService billService;
-    @GetMapping("/search")
-    public String getAllTripByDateAndDonAndTra(Model model, @Param("date") String date, @Param("don") String don, @Param("tra") String tra, HttpSession session){
+    @GetMapping("/trips")
+    public List<Trip> getAllTripByDateAndDonAndTra(@RequestParam("date") String date,
+                                                   @RequestParam("don") String don,
+                                                   @RequestParam("tra") String tra, HttpSession session){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date sqlDate = null;
         try {
 
             sqlDate = new Date(dateFormat.parse(date).getTime());
             session.setAttribute("date", sqlDate);
-            // In ra kiểu dữ liệu SQL Date đã chuyển đổi
-            System.out.println("SQL Date: " + sqlDate);
         } catch (Exception e) {
             e.printStackTrace();
         }
         List<Trip> list_trip = new ArrayList<>();
         list_trip = bookingService.getTripByDateAndDonAndTra(sqlDate, don, tra);
-        model.addAttribute("list_trip", list_trip);
         session.setAttribute("list_trip", list_trip);
-        return "Booking";
+        return list_trip;
     }
     @GetMapping("/search/location/{id_trip}")
     public String getRouteByIdTrip(Model model, @PathVariable("id_trip") Integer id_trip, HttpSession session){
