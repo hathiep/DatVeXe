@@ -34,10 +34,13 @@ public class Bill {
     @Column(name = "tra")
     private String tra;
 
+    @Column(name = "create_date")
+    private Date createDate;
+
     public Bill() {
     }
 
-    public Bill(int id, int idTrip, Date date, Time time, int idClient, int quantity, String don, String tra) {
+    public Bill(int id, int idTrip, Date date, Time time, int idClient, int quantity, String don, String tra, Date createDate) {
         this.id = id;
         this.idTrip = idTrip;
         this.date = date;
@@ -46,6 +49,7 @@ public class Bill {
         this.quantity = quantity;
         this.don = don;
         this.tra = tra;
+        this.createDate = createDate;
     }
 
     public int getId() {
@@ -110,5 +114,13 @@ public class Bill {
 
     public void setTra(String tra) {
         this.tra = tra;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

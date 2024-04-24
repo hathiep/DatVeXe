@@ -11,23 +11,24 @@ public class Client {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "email")
     private String email;
 
     @Column(name = "sdt")
     private String sdt;
 
-    @Column(name = "ten")
-    private String ten;
 
     public Client() {
     }
 
-    public Client(int id, String email, String sdt, String ten) {
+    public Client(int id, String name, String email, String sdt) {
         this.id = id;
+        this.name = name;
         this.email = email;
         this.sdt = sdt;
-        this.ten = ten;
     }
 
     public int getId() {
@@ -54,11 +55,11 @@ public class Client {
         this.sdt = sdt;
     }
 
-    public String getTen() {
-        return ten;
+    public String getName() {
+        return name;
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void setName(String name) {
+        this.name = name;
     }
 }
